@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import * as S from './styled';
 
 export const Payment = () => {
   const onlyNumbers = new RegExp(/^\d+$/);
@@ -10,6 +11,9 @@ export const Payment = () => {
   };
 
   return (
-    <input value={value} onChange={(e) => inputHandler(e.target.value)}></input>
+    <S.PaymentInput
+      value={value}
+      onChange={(e) => inputHandler(e.target.value)}
+    ></S.PaymentInput>
   );
 };

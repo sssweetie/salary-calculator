@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import * as S from './styled';
 
 export const WorkingHours = () => {
   const [hours, setHours] = useState(8);
@@ -10,7 +11,7 @@ export const WorkingHours = () => {
   };
 
   return (
-    <input
+    <S.WorkingHoursInput
       min={0}
       max={24}
       value={hours}
