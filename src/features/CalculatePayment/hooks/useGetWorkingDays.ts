@@ -2,16 +2,11 @@ import React from 'react';
 import axios from 'axios';
 
 interface GetWorkingDays {
-  event: SubmitEvent;
   year: number;
   month: number;
 }
 
-export const useGetWorkingDays = async ({
-  event,
-  year,
-  month,
-}: GetWorkingDays) => {
+export const useGetWorkingDays = async ({ year, month }: GetWorkingDays) => {
   const response = await axios.get(
     `https://isdayoff.ru/api/getdata?year=${year}&month=${
       month < 10 ? '0' + month : month
@@ -33,6 +28,5 @@ export const useGetWorkingDays = async ({
   };
 
   const output = getDays(year, month) - weekends;
-  event.preventDefault();
   return output;
 };
