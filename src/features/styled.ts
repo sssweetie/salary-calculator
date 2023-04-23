@@ -22,3 +22,11 @@ export const DataPicker = styled.div`
   justify-content: space-between;
   width: 368px;
 `;
+
+export const SubmitButton = styled.button.attrs({ type: 'submit' })`
+  border: 1px solid black;
+  background-color: aliceblue;
+  height: 40px;
+  width: 200px;
+  margin-top: 40px;
+`;

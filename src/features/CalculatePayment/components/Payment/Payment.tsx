@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import * as S from './styled';
 
-export const Payment = () => {
+export const Payment = ({ register, fieldName }: any) => {
   const onlyNumbers = new RegExp(/^\d+$/);
   const [value, setValue] = useState('');
   const inputHandler = (value: any) => {
@@ -12,6 +12,7 @@ export const Payment = () => {
 
   return (
     <S.PaymentInput
+      {...register(fieldName)}
       value={value}
       onChange={(e) => inputHandler(e.target.value)}
     ></S.PaymentInput>

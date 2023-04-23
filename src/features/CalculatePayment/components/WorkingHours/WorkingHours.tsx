@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import * as S from './styled';
 
-export const WorkingHours = () => {
+export const WorkingHours = ({ register, fieldName }: any) => {
   const [hours, setHours] = useState(8);
   const onlyNumbers = new RegExp(/^\d+$/);
   const inputHandler = (value: any) => {
@@ -12,6 +12,7 @@ export const WorkingHours = () => {
 
   return (
     <S.WorkingHoursInput
+      {...register(fieldName)}
       min={0}
       max={24}
       value={hours}

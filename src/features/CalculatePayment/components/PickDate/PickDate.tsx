@@ -3,10 +3,15 @@ import { useDate } from '../../hooks/useDate';
 import { DateRange } from '../../../../libs/types';
 import * as S from './styled';
 
-export const PickDate = ({ maximumDate, difference }: DateRange) => {
+export const PickDate = ({
+  maximumDate,
+  difference,
+  register,
+  fieldName,
+}: DateRange) => {
   const dates = useDate({ maximumDate, difference });
   return (
-    <S.Selector>
+    <S.Selector {...register(fieldName)}>
       {dates.map((date) => (
         <option key={date} value={date}>
           {date}
