@@ -5,12 +5,14 @@ import { PickDate } from './CalculatePayment/components/PickDate';
 import * as S from './styled';
 import { useGetWorkingDays } from './CalculatePayment/hooks/useGetWorkingDays';
 import { useForm } from 'react-hook-form';
+import { Date } from '../libs/types/features/CalculatePayment';
 
 export const CalculatePayment = () => {
-  const [hourPayment, setHourPayment] = useState('');
-  const [state, setState] = useState({
-    month: 10,
-    year: 2021,
+  const [formState, setFormState] = useState({
+    month: 12,
+    year: 2023,
+    hours: 8,
+    payment: '',
   });
 
   const {
@@ -19,18 +21,26 @@ export const CalculatePayment = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      hours: 8,
-      payment: '',
-      ...state,
+      ...formState,
     },
   });
 
-  const SubmitHandler = async (data: any) => {
-    setState({ month: Number(data.month), year: Number(data.year) });
-    const workingDays = await useGetWorkingDays(state);
+  const SubmitHandler = async (data: Date) => {
+    setFormState((prevState) => ({
+      ...prevState,
+      month: Number(data.month),
+      year: Number(data.year),
+    }));
+
+    const workingDays = await useGetWorkingDays(formState);
+
     const paymentPerHours =
       Math.round(Number(data.payment) / (workingDays * data.hours)) / 10;
-    setHourPayment(paymentPerHours.toString());
+
+    setFormState((prevState) => ({
+      ...prevState,
+      payment: paymentPerHours.toString(),
+    }));
   };
 
   return (
@@ -38,15 +48,21 @@ export const CalculatePayment = () => {
       <S.InputFieldWrapper>
         <label>Input payment</label>
         <Payment
+          initialPayment={formState.payment}
           register={register}
           fieldName="payment"
           error={errors.payment ? true : false}
         />
+        {errors.payment && <S.Error>{errors.payment?.message}</S.Error>}
       </S.InputFieldWrapper>
-      {errors.payment && <S.Error>{errors.payment?.message}</S.Error>}
+
       <S.InputFieldWrapper>
         <label>Input hours</label>
-        <WorkingHours register={register} fieldName="hours" />
+        <WorkingHours
+          initialHours={formState.hours}
+          register={register}
+          fieldName="hours"
+        />
       </S.InputFieldWrapper>
       <S.DataPicker>
         <S.InputFieldWrapper>
@@ -54,7 +70,7 @@ export const CalculatePayment = () => {
           <PickDate
             register={register}
             fieldName="month"
-            maximumDate={12}
+            maximumDate={formState.month}
             difference={11}
           />
         </S.InputFieldWrapper>
@@ -63,13 +79,13 @@ export const CalculatePayment = () => {
           <PickDate
             register={register}
             fieldName="year"
-            maximumDate={2023}
+            maximumDate={formState.year}
             difference={95}
           />
         </S.InputFieldWrapper>
       </S.DataPicker>
       <S.SubmitButton>Submit Form</S.SubmitButton>
-      <S.Output>Result is {hourPayment}</S.Output>
+      <S.Output>Result is {formState.payment}</S.Output>
     </S.Wrapper>
   );
 };

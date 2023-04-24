@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import * as S from './styled';
+import { FormProps } from '../../../../libs/types/features/CalculatePayment';
 
-export const WorkingHours = ({ register, fieldName }: any) => {
-  const [hours, setHours] = useState(8);
+interface Props extends FormProps {
+  initialHours: number;
+}
+
+export const WorkingHours = ({ register, fieldName, initialHours }: Props) => {
+  const [hours, setHours] = useState(initialHours);
   const onlyNumbers = new RegExp(/^\d+$/);
-  const inputHandler = (value: any) => {
+
+  const GetHours = (value: any) => { //str and num
     if ((onlyNumbers.test(value) && value > 0 && value <= 24) || value === '') {
       setHours(value);
     }
@@ -16,7 +22,7 @@ export const WorkingHours = ({ register, fieldName }: any) => {
       min={0}
       max={24}
       value={hours}
-      onChange={(e) => inputHandler(e.target.value)}
+      onChange={(e) => GetHours(e.target.value)}
     />
   );
 };

@@ -7,7 +7,7 @@ export const Wrapper = styled.form`
   padding: 10px 20px 20px 20px;
   position: absolute;
   min-width: 400px;
-  height: 300px;
+  min-height: 300px;
   position: absolute;
   border: 1px solid black;
   border-radius: 10px;
@@ -28,6 +28,7 @@ export const SubmitButton = styled.button.attrs({ type: 'submit' })`
   height: 40px;
   width: 200px;
   border: 0;
+  margin-top: 20px;
   &:hover {
     cursor: pointer;
   }
@@ -45,7 +46,7 @@ export const InputFieldWrapper = styled.div`
 `;
 
 export const Output = styled.div`
-  margin: 0;
+  margin-top: 20px;
 `;
 
 export const Error = styled.label`

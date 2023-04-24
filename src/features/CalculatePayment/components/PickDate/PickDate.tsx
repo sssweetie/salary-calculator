@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDate } from '../../hooks/useDate';
-import { DateRange } from '../../../../libs/types';
 import * as S from './styled';
+import { DateRange } from '../../../../libs/types/features/CalculatePayment';
 
 export const PickDate = ({
   maximumDate,
@@ -10,6 +10,7 @@ export const PickDate = ({
   fieldName,
 }: DateRange) => {
   const dates = useDate({ maximumDate, difference });
+
   return (
     <S.Selector {...register(fieldName)}>
       {dates.map((date) => (

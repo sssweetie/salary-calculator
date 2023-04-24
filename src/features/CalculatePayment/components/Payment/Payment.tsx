@@ -1,12 +1,25 @@
 import React, { useState } from 'react';
 import * as S from './styled';
+import { FormProps } from '../../../../libs/types/features/CalculatePayment';
 
-export const Payment = ({ register, fieldName, error }: any) => {
+interface Props extends FormProps {
+  error: boolean;
+  initialPayment: string;
+}
+
+export const Payment = ({
+  register,
+  fieldName,
+  error,
+  initialPayment,
+}: Props) => {
   const onlyNumbers = new RegExp(/^\d+$/);
-  const [value, setValue] = useState('');
-  const inputHandler = (value: any) => {
+
+  const [payment, setPayment] = useState(initialPayment);
+
+  const inputHandler = (value: string) => {
     if (onlyNumbers.test(value) || value === '') {
-      setValue(value);
+      setPayment(value);
     }
   };
 
@@ -14,8 +27,8 @@ export const Payment = ({ register, fieldName, error }: any) => {
     <S.PaymentInput
       $error={error}
       {...register(fieldName, { required: 'You must input month payment' })}
-      value={value}
+      value={payment}
       onChange={(e) => inputHandler(e.target.value)}
-    ></S.PaymentInput>
+    />
   );
 };
