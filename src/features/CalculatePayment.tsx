@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import * as S from './styled';
 import { Payment } from './CalculatePayment/components/Payment';
 import { WorkingHours } from './CalculatePayment/components/WorkingHours';
 import { PickDate } from './CalculatePayment/components/PickDate';
-import * as S from './styled';
 import { useGetWorkingDays } from './CalculatePayment/hooks/useGetWorkingDays';
-import { useForm } from 'react-hook-form';
 import { Date } from '../libs/types/features/CalculatePayment';
+import { Layout } from './CalculatePayment/components/Layout';
 
 export const CalculatePayment = () => {
-  const [formState, setFormState] = useState({
+  const [formState, setFormState] = useState<Date>({
     month: 12,
     year: 2023,
     hours: 8,
     payment: '',
+    workingDays: '',
   });
 
   const {
@@ -28,64 +30,63 @@ export const CalculatePayment = () => {
   const SubmitHandler = async (data: Date) => {
     setFormState((prevState) => ({
       ...prevState,
-      month: Number(data.month),
-      year: Number(data.year),
+      month: +data.month,
+      year: +data.year,
     }));
 
     const workingDays = await useGetWorkingDays(formState);
 
-    const paymentPerHours =
-      Math.round(Number(data.payment) / (workingDays * data.hours)) / 10;
+    const paymentPerHours = (
+      +data.payment /
+      (workingDays * data.hours)
+    ).toFixed(1);
 
     setFormState((prevState) => ({
       ...prevState,
       payment: paymentPerHours.toString(),
+      workingDays: workingDays.toString(),
     }));
   };
 
   return (
-    <S.Wrapper onSubmit={handleSubmit((data) => SubmitHandler(data))}>
-      <S.InputFieldWrapper>
-        <label>Input payment</label>
+    <Layout
+      formState={formState}
+      errors={errors}
+      onSubmit={handleSubmit((data) => SubmitHandler(data))}
+      payment={
         <Payment
           initialPayment={formState.payment}
           register={register}
           fieldName="payment"
           error={errors.payment ? true : false}
         />
-        {errors.payment && <S.Error>{errors.payment?.message}</S.Error>}
-      </S.InputFieldWrapper>
-
-      <S.InputFieldWrapper>
-        <label>Input hours</label>
+      }
+      workingHours={
         <WorkingHours
           initialHours={formState.hours}
           register={register}
           fieldName="hours"
+          error={errors.hours ? true : false}
         />
-      </S.InputFieldWrapper>
-      <S.DataPicker>
-        <S.InputFieldWrapper>
-          <label>Pick month</label>
-          <PickDate
-            register={register}
-            fieldName="month"
-            maximumDate={formState.month}
-            difference={11}
-          />
-        </S.InputFieldWrapper>
-        <S.InputFieldWrapper>
-          <label>Pick year</label>
-          <PickDate
-            register={register}
-            fieldName="year"
-            maximumDate={formState.year}
-            difference={95}
-          />
-        </S.InputFieldWrapper>
-      </S.DataPicker>
-      <S.SubmitButton>Submit Form</S.SubmitButton>
-      <S.Output>Result is {formState.payment}</S.Output>
-    </S.Wrapper>
+      }
+      pickMonth={
+        <PickDate
+          register={register}
+          fieldName="month"
+          maximumDate={12}
+          difference={11}
+          inputName={'Pick month'}
+        />
+      }
+      pickYear={
+        <PickDate
+          register={register}
+          fieldName="year"
+          maximumDate={2023}
+          difference={100}
+          inputName="Pick year"
+        />
+      }
+    />
   );
 };

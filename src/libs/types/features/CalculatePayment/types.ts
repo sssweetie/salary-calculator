@@ -3,6 +3,7 @@ export interface DateRange {
   difference: number;
   register: any;
   fieldName: string;
+  inputName?: string;
 }
 
 export interface Date {
@@ -10,6 +11,7 @@ export interface Date {
   year: number;
   hours: number;
   payment: string;
+  workingDays: string;
 }
 
 export interface FormProps {

@@ -24,11 +24,14 @@ export const Payment = ({
   };
 
   return (
-    <S.PaymentInput
-      $error={error}
-      {...register(fieldName, { required: 'You must input month payment' })}
-      value={payment}
-      onChange={(e) => inputHandler(e.target.value)}
-    />
+    <S.InputFieldWrapper>
+      <label>Input payment (for month)</label>
+      <S.PaymentInput
+        $error={error}
+        {...register(fieldName, { required: 'You must input month payment' })}
+        value={payment}
+        onChange={(e) => inputHandler(e.target.value)}
+      />
+    </S.InputFieldWrapper>
   );
 };

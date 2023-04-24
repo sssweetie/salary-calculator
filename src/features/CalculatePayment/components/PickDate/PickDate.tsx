@@ -8,16 +8,20 @@ export const PickDate = ({
   difference,
   register,
   fieldName,
+  inputName,
 }: DateRange) => {
   const dates = useDate({ maximumDate, difference });
 
   return (
-    <S.Selector {...register(fieldName)}>
-      {dates.map((date) => (
-        <option key={date} value={date}>
-          {date}
-        </option>
-      ))}
-    </S.Selector>
+    <S.InputFieldWrapper>
+      <label>{inputName}</label>
+      <S.Selector size="5" {...register(fieldName)}>
+        {dates.map((date) => (
+          <option key={date} value={date}>
+            {date}
+          </option>
+        ))}
+      </S.Selector>
+    </S.InputFieldWrapper>
   );
 };

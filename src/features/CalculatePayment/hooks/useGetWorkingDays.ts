@@ -13,20 +13,15 @@ export const useGetWorkingDays = async ({ year, month }: GetWorkingDays) => {
     }&pre=[1]&sd=[1]&delimeter=,`
   );
 
-  const weekendsArray = response.data
-    .split(',')
-    .map((symbol: string) => +symbol);
+  const weekendsArray = response.data.split(',').map((symbol: string) => {
+    const symbolToBoolean = !+symbol;
+    return +symbolToBoolean;
+  });
 
-  const weekends = weekendsArray.reduce(
+  const getTotalDays = weekendsArray.reduce(
     (prevValue: number, currentValue: number) => prevValue + currentValue,
     0
   );
 
-  const getDays = (year: number, month: number): number => {
-    const date = new Date(year, month, 0).getDate();
-    return date;
-  };
-
-  const output = getDays(year, month) - weekends;
-  return output;
+  return getTotalDays;
 };
