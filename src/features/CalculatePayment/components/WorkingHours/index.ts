@@ -1,1 +1,0 @@
-export { WorkingHours } from './WorkingHours';

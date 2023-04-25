@@ -14,6 +14,5 @@ export const daysOffService = async ({
   const response = await axios.get<string>(
     `https://isdayoff.ru/api/getdata?year=${year}&month=${month}&pre=[1]&sd=[1]&delimeter=,`
   );
-
   return response.data.match(WORKING_DAY_REG_EXP)!.length;
 };

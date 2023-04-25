@@ -1,22 +1,21 @@
 import React, { useState } from 'react';
 import * as S from './styled';
 import { useForm } from 'react-hook-form';
-import { Salary } from './components/Salary';
-import { WorkingHours } from './components/WorkingHours';
-import { PickMonth } from './components/PickMonth';
 import { Layout } from './components/Layout';
 import { daysOffService } from './services/daysOffService';
 import { parseYearMonth, stringifyYearMonth } from './utils';
 import { Output } from './components/Output';
+import { TextField } from './components/TextField';
 
 export const CalculatePayment = () => {
   const [hourSalary, setHourSalary] = useState(0);
   const [workingDays, setWorkingDays] = useState(0);
 
   const {
-    register,
     handleSubmit,
-    formState: { errors },
+    control,
+
+    formState: { isValid },
   } = useForm({
     defaultValues: {
       yearMonth: stringifyYearMonth(new Date()),
@@ -26,32 +25,41 @@ export const CalculatePayment = () => {
   });
 
   const onSubmit = async ({ salary, hours, yearMonth }: any) => {
-    const workingDays = await daysOffService(parseYearMonth(yearMonth));
-    setWorkingDays(workingDays);
-    setHourSalary(salary / hours / workingDays);
+    try {
+      const workingDays = await daysOffService(parseYearMonth(yearMonth));
+      setWorkingDays(workingDays);
+      setHourSalary(salary / hours / workingDays);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <Layout
       form={
         <S.Form onSubmit={handleSubmit(onSubmit)}>
-          <Salary
-            register={register}
-            fieldName="salary"
-            error={Boolean(errors.salary)}
+          <TextField
+            label="Salary"
+            type="number"
+            control={control}
+            name="salary"
           />
-          <WorkingHours
-            register={register}
-            fieldName="hours"
-            error={Boolean(errors.hours)}
+          <TextField
+            label="Hours per day"
+            type="number"
+            control={control}
+            name="hours"
+            max={24}
           />
-          <PickMonth
-            register={register}
-            fieldName="yearMonth"
-            label={'Pick month'}
-            error={Boolean(errors.yearMonth)}
+          <TextField
+            label="Date"
+            type="month"
+            control={control}
+            name="yearMonth"
           />
-          <S.SubmitButton type="submit">submit</S.SubmitButton>
+          <S.SubmitButton disabled={!isValid} type="submit">
+            Submit
+          </S.SubmitButton>
         </S.Form>
       }
       output={

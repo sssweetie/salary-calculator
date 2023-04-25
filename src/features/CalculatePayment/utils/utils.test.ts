@@ -1,4 +1,4 @@
-import { stringifyYearMonth, parseYearMonth } from './utils';
+import { stringifyYearMonth, parseYearMonth } from './';
 
 test('Converting current date to string format', () => {
   expect(stringifyYearMonth(new Date())).toBe('2023-04');
