@@ -26,7 +26,6 @@ export const CalculatePayment = () => {
       ...formState,
     },
   });
-
   const SubmitHandler = async (data: Date) => {
     setFormState((prevState) => ({
       ...prevState,
@@ -47,7 +46,6 @@ export const CalculatePayment = () => {
       workingDays: workingDays.toString(),
     }));
   };
-
   return (
     <Layout
       formState={formState}

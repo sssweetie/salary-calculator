@@ -1,0 +1,23 @@
+{
+  "extends": ["react-app", "react-app/jest"],
+  "rules": {
+    "no-console": "warn",
+    "quotes": ["error", "single"],
+    "jsx-quotes": ["error", "prefer-double"],
+    "prefer-const": "error",
+    "max-len": ["error", { "code": 120 }],
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "never",
+        "objects": "always-multiline",
+        "imports": "never",
+        "exports": "never",
+        "functions": "never"
+      }
+    ],
+    "brace-style": ["error", "1tbs"],
+    "no-duplicate-imports": ["error"],
+    "no-debugger": ["warn"]
+  }
+}
