@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import * as S from './styled';
-import { FormProps } from '../../../../libs/types/features/CalculatePayment';
+import { FormProps } from '../../types';
 
 interface Props extends FormProps {
   initialHours: number;

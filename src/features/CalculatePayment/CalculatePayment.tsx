@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as S from './styled';
-import { Payment } from './CalculatePayment/components/Payment';
-import { WorkingHours } from './CalculatePayment/components/WorkingHours';
-import { PickDate } from './CalculatePayment/components/PickDate';
-import { useGetWorkingDays } from './CalculatePayment/hooks/useGetWorkingDays';
-import { Date } from '../libs/types/features/CalculatePayment';
-import { Layout } from './CalculatePayment/components/Layout';
+import { Payment } from './components/Payment';
+import { WorkingHours } from './components/WorkingHours';
+import { PickDate } from './components/PickDate';
+import { useGetWorkingDays } from './hooks/useGetWorkingDays';
+import { Date } from './types';
+import { Layout } from './components/Layout';
 
 export const CalculatePayment = () => {
   const [formState, setFormState] = useState<Date>({

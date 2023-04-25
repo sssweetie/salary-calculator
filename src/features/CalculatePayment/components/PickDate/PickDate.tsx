@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDate } from '../../hooks/useDate';
 import * as S from './styled';
-import { DateRange } from '../../../../libs/types/features/CalculatePayment';
+import { DateRange } from '../../types';
 
 export const PickDate = ({
   maximumDate,

@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import * as S from './styled';
-import { Date } from '../../../../libs/types/features/CalculatePayment';
+import { Date } from '../../types';
 
 interface Props {
   payment: ReactNode;
