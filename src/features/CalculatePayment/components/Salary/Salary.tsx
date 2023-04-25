@@ -9,7 +9,10 @@ export const Salary = ({ register, fieldName, error }: FormProps) => {
       <S.PaymentInput
         type="number"
         $error={error}
-        {...register(fieldName, { required: 'You must input month payment' })}
+        {...register(fieldName, {
+          required: 'You must input month payment',
+          min: 0,
+        })}
       />
     </S.InputFieldWrapper>
   );

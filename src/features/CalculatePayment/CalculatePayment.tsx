@@ -7,18 +7,11 @@ import { PickMonth } from './components/PickMonth';
 import { Layout } from './components/Layout';
 import { daysOffService } from './services/daysOffService';
 import { parseYearMonth, stringifyYearMonth } from './utils';
+import { Output } from './components/Output';
 
 export const CalculatePayment = () => {
   const [hourSalary, setHourSalary] = useState(0);
   const [workingDays, setWorkingDays] = useState(0);
-
-  interface Data {
-    year: number;
-    month: number;
-    hours: number;
-    salary: number;
-    workingDays: number;
-  }
 
   const {
     register,
@@ -40,25 +33,29 @@ export const CalculatePayment = () => {
 
   return (
     <Layout
-      hourSalary={hourSalary}
-      workingDays={workingDays}
-      onSubmit={handleSubmit(onSubmit)}
-      salary={
-        <Salary
-          register={register}
-          fieldName="salary"
-          error={Boolean(errors.salary)}
-        />
+      form={
+        <S.Form onSubmit={handleSubmit(onSubmit)}>
+          <Salary
+            register={register}
+            fieldName="salary"
+            error={Boolean(errors.salary)}
+          />
+          <WorkingHours
+            register={register}
+            fieldName="hours"
+            error={Boolean(errors.hours)}
+          />
+          <PickMonth
+            register={register}
+            fieldName="yearMonth"
+            label={'Pick month'}
+            error={Boolean(errors.yearMonth)}
+          />
+          <S.SubmitButton type="submit">submit</S.SubmitButton>
+        </S.Form>
       }
-      workingHours={
-        <WorkingHours
-          register={register}
-          fieldName="hours"
-          error={Boolean(errors.hours)}
-        />
-      }
-      pickMonth={
-        <PickMonth register={register} fieldName="month" label={'Pick month'} />
+      output={
+        <Output hourSalary={hourSalary} workingDays={workingDays}></Output>
       }
     />
   );
