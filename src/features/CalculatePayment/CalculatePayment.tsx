@@ -7,14 +7,19 @@ import { parseYearMonth, stringifyYearMonth } from './utils';
 import { Output } from './components/Output';
 import { TextField } from './components/TextField';
 
-export const CalculatePayment = () => {
+type FormData = {
+  salary: number;
+  hours: number;
+  yearMonth: string;
+};
+
+export const CalculatePayment: React.FC = () => {
   const [hourSalary, setHourSalary] = useState(0);
   const [workingDays, setWorkingDays] = useState(0);
-
+  
   const {
     handleSubmit,
     control,
-
     formState: { isValid },
   } = useForm({
     defaultValues: {
@@ -24,7 +29,7 @@ export const CalculatePayment = () => {
     },
   });
 
-  const onSubmit = async ({ salary, hours, yearMonth }: any) => {
+  const onSubmit = async ({ salary, hours, yearMonth }: FormData) => {
     try {
       const workingDays = await daysOffService(parseYearMonth(yearMonth));
       setWorkingDays(workingDays);
@@ -38,6 +43,7 @@ export const CalculatePayment = () => {
     <Layout
       form={
         <S.Form onSubmit={handleSubmit(onSubmit)}>
+          <S.FormName>Salary calculator</S.FormName>
           <TextField
             label="Salary"
             type="number"

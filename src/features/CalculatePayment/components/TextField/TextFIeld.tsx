@@ -10,7 +10,13 @@ type Props = {
   max?: number;
 };
 
-export const TextField = ({ label, type, control, name, max }: Props) => {
+export const TextField: React.FC<Props> = ({
+  label,
+  type,
+  control,
+  name,
+  max,
+}) => {
   return (
     <Controller
       control={control}
@@ -20,6 +26,7 @@ export const TextField = ({ label, type, control, name, max }: Props) => {
         <S.InputFieldWrapper>
           <label>{label}</label>
           <S.Input $error={Boolean(error)} type={type} {...field} />
+          {Boolean(error) && <S.Error>Incorrect input</S.Error>}
         </S.InputFieldWrapper>
       )}
     />

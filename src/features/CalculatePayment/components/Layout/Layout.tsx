@@ -6,11 +6,10 @@ interface Props {
   output: ReactNode;
 }
 
-export const Layout = ({ form, output }: Props) => {
+export const Layout: React.FC<Props> = ({ form, output }) => {
   return (
     <S.Wrapper>
       {form}
-      <hr></hr>
       {output}
     </S.Wrapper>
   );

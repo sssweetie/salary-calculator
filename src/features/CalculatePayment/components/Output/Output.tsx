@@ -6,12 +6,15 @@ type Props = {
   workingDays: number;
 };
 
-export const Output = ({ hourSalary, workingDays }: Props) => {
+export const Output: React.FC<Props> = ({ hourSalary, workingDays }) => {
   if (workingDays > 0)
     return (
       <S.Wrapper>
-        <S.Output>Number of working days: {workingDays}.</S.Output>
-        <S.Output>1 hour of work is estimated at {hourSalary}.</S.Output>
+        <S.Line />
+        <S.Output>Number of working days: {workingDays}</S.Output>
+        <S.Output>
+          1 hour of work is estimated at {hourSalary.toFixed(1)}
+        </S.Output>
       </S.Wrapper>
     );
   return null;
