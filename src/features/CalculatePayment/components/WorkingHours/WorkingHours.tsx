@@ -1,15 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import * as S from './styled';
 import { FormProps } from '../../types';
 
-interface Props extends FormProps {
-  error: boolean;
-}
-
-export const WorkingHours = ({ register, fieldName, error }: Props) => {
+export const WorkingHours = ({ register, fieldName, error }: FormProps) => {
   return (
     <S.InputFieldWrapper>
-      <label>Input hours (1-24)</label>
+      <label>Hours per day</label>
       <S.WorkingHoursInput
         {...register(fieldName, { required: 'You must input numbers' })}
         type="number"

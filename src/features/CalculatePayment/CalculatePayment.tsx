@@ -1,15 +1,24 @@
 import React, { useState } from 'react';
 import * as S from './styled';
 import { useForm } from 'react-hook-form';
-import { Payment } from './components/Payment';
+import { Salary } from './components/Salary';
 import { WorkingHours } from './components/WorkingHours';
-import { PickDate } from './components/PickDate';
+import { PickMonth } from './components/PickMonth';
 import { Layout } from './components/Layout';
 import { daysOffService } from './services/daysOffService';
+import { parseYearMonth, stringifyYearMonth } from './utils';
 
 export const CalculatePayment = () => {
   const [hourSalary, setHourSalary] = useState(0);
   const [workingDays, setWorkingDays] = useState(0);
+
+  interface Data {
+    year: number;
+    month: number;
+    hours: number;
+    salary: number;
+    workingDays: number;
+  }
 
   const {
     register,
@@ -17,26 +26,25 @@ export const CalculatePayment = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      year: new Date().getFullYear(),
-      month: new Date().getMonth() + 1,
+      yearMonth: stringifyYearMonth(new Date()),
       hours: 8,
       salary: 30000,
-      workingDays,
     },
   });
-  const SubmitHandler = async (data: any) => {
-    const result = await daysOffService(data);
-    setWorkingDays(result);
-    const paymentPerHours = data.payment / workingDays / data.hours;
-    setHourSalary(paymentPerHours);
+
+  const onSubmit = async ({ salary, hours, yearMonth }: any) => {
+    const workingDays = await daysOffService(parseYearMonth(yearMonth));
+    setWorkingDays(workingDays);
+    setHourSalary(salary / hours / workingDays);
   };
+
   return (
     <Layout
-      salary={hourSalary}
+      hourSalary={hourSalary}
       workingDays={workingDays}
-      onSubmit={handleSubmit((data) => SubmitHandler(data))}
-      payment={
-        <Payment
+      onSubmit={handleSubmit(onSubmit)}
+      salary={
+        <Salary
           register={register}
           fieldName="salary"
           error={Boolean(errors.salary)}
@@ -46,26 +54,11 @@ export const CalculatePayment = () => {
         <WorkingHours
           register={register}
           fieldName="hours"
-          error={Boolean(errors.salary)}
+          error={Boolean(errors.hours)}
         />
       }
       pickMonth={
-        <PickDate
-          register={register}
-          fieldName="month"
-          maximumDate={12}
-          difference={11}
-          inputName={'Pick month'}
-        />
-      }
-      pickYear={
-        <PickDate
-          register={register}
-          fieldName="year"
-          maximumDate={2023}
-          difference={100}
-          inputName="Pick year"
-        />
+        <PickMonth register={register} fieldName="month" label={'Pick month'} />
       }
     />
   );

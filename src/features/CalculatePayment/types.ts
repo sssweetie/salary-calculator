@@ -1,20 +1,11 @@
 export interface DateRange {
-  maximumDate: number;
-  difference: number;
   register: any;
   fieldName: string;
-  inputName?: string;
-}
-
-export interface Date {
-  month: number;
-  year: number;
-  hours: number;
-  payment: string;
-  workingDays: string;
+  label: string;
 }
 
 export interface FormProps {
   register: any;
   fieldName: string;
+  error: boolean;
 }

@@ -1,39 +1,33 @@
 import React, { ReactNode } from 'react';
 import * as S from './styled';
-import { Date } from '../../types';
 
 interface Props {
-  payment: ReactNode;
+  salary: ReactNode;
   workingHours: ReactNode;
   pickMonth: ReactNode;
-  pickYear: ReactNode;
   onSubmit: any;
-  salary: number;
+  hourSalary: number;
   workingDays: number;
 }
 
 export const Layout = ({
-  payment,
+  salary,
   workingHours,
   pickMonth,
-  pickYear,
   onSubmit,
-  salary,
+  hourSalary,
   workingDays,
 }: Props) => {
   return (
     <S.Wrapper onSubmit={onSubmit}>
-      {payment}
+      {salary}
       {workingHours}
-      <S.DataPicker>
-        {pickMonth}
-        {pickYear}
-      </S.DataPicker>
+      {pickMonth}
       <S.SubmitButton>Submit</S.SubmitButton>
       <S.Output>
-        {salary &&
+        {hourSalary &&
           workingDays &&
-          `Number of working days: ${workingDays}. 1 hour of work is estimated at ${salary}. `}
+          `Number of working days: ${workingDays}. 1 hour of work is estimated at ${hourSalary}. `}
       </S.Output>
     </S.Wrapper>
   );
