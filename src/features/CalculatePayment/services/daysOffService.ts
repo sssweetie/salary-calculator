@@ -11,7 +11,6 @@ export const daysOffService = async ({
   year,
   month,
 }: GetWorkingDays): Promise<number> => {
-  console.log(year, month)
   const response = await axios.get<string>(
     `https://isdayoff.ru/api/getdata?year=${year}&month=${month}&pre=[1]&sd=[1]&delimeter=,`
   );
