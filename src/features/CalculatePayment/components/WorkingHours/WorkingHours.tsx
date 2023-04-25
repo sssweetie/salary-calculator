@@ -3,35 +3,19 @@ import * as S from './styled';
 import { FormProps } from '../../types';
 
 interface Props extends FormProps {
-  initialHours: number;
   error: boolean;
 }
 
-export const WorkingHours = ({
-  register,
-  fieldName,
-  initialHours,
-  error,
-}: Props) => {
-  const [hours, setHours] = useState(initialHours);
-  const onlyNumbers = new RegExp(/^\d+$/);
-
-  const GetHours = (value: any) => {
-    if ((onlyNumbers.test(value) && value > 0 && value <= 24) || value === '') {
-      setHours(value);
-    }
-  };
-
+export const WorkingHours = ({ register, fieldName, error }: Props) => {
   return (
     <S.InputFieldWrapper>
       <label>Input hours (1-24)</label>
       <S.WorkingHoursInput
         {...register(fieldName, { required: 'You must input numbers' })}
+        type="number"
         $error={error}
-        min={0}
+        min={1}
         max={24}
-        value={hours}
-        onChange={(e) => GetHours(e.target.value)}
       />
     </S.InputFieldWrapper>
   );
