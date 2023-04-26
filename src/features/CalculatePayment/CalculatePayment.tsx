@@ -6,22 +6,19 @@ import { daysOffService } from './services/daysOffService';
 import { parseYearMonth, stringifyYearMonth } from './utils';
 import { Output } from './components/Output';
 import { TextField } from './components/TextField';
+import { SalaryData } from './types';
 
-type FormData = {
-  salary: number;
-  hours: number;
-  yearMonth: string;
-};
+const MAX_HOURS = 24;
 
 export const CalculatePayment: React.FC = () => {
   const [hourSalary, setHourSalary] = useState(0);
   const [workingDays, setWorkingDays] = useState(0);
-  
+
   const {
     handleSubmit,
     control,
     formState: { isValid },
-  } = useForm({
+  } = useForm<SalaryData>({
     defaultValues: {
       yearMonth: stringifyYearMonth(new Date()),
       hours: 8,
@@ -29,9 +26,11 @@ export const CalculatePayment: React.FC = () => {
     },
   });
 
-  const onSubmit = async ({ salary, hours, yearMonth }: FormData) => {
+  const onSubmit = async ({ salary, hours, yearMonth }: SalaryData) => {
     try {
-      const workingDays = await daysOffService(parseYearMonth(yearMonth));
+      const workingDays = await daysOffService.getWorkingDays(
+        parseYearMonth(yearMonth)
+      );
       setWorkingDays(workingDays);
       setHourSalary(salary / hours / workingDays);
     } catch (error) {
@@ -55,7 +54,7 @@ export const CalculatePayment: React.FC = () => {
             type="number"
             control={control}
             name="hours"
-            max={24}
+            max={MAX_HOURS}
           />
           <TextField
             label="Date"
@@ -68,9 +67,7 @@ export const CalculatePayment: React.FC = () => {
           </S.SubmitButton>
         </S.Form>
       }
-      output={
-        <Output hourSalary={hourSalary} workingDays={workingDays}></Output>
-      }
+      output={<Output hourSalary={hourSalary} workingDays={workingDays} />}
     />
   );
 };

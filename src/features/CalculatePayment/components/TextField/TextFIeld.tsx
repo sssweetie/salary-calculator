@@ -1,12 +1,12 @@
 import React from 'react';
 import * as S from './styled';
-import { Controller } from 'react-hook-form';
+import { Controller, Control } from 'react-hook-form';
 
 type Props = {
   label: string;
   type: string;
   name: string;
-  control: any;
+  control: Control<any>;
   max?: number;
 };
 
