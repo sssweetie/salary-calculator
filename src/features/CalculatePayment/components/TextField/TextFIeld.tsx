@@ -7,6 +7,9 @@ type Props = {
   type: string;
   name: string;
   control: Control<any>;
+  required: boolean;
+  disabled: boolean;
+  min?: number;
   max?: number;
 };
 
@@ -14,20 +17,27 @@ export const TextField: React.FC<Props> = ({
   label,
   type,
   control,
+  required,
+  disabled,
   name,
+  min,
   max,
 }) => {
   return (
     <Controller
       control={control}
       name={name}
-      rules={{ required: true, min: 1, max }}
+      rules={{ required, min, max }}
       render={({ fieldState: { error }, field }) => (
-        <S.InputFieldWrapper>
+        <S.InputWrapper>
           <label>{label}</label>
-          <S.Input $error={Boolean(error)} type={type} {...field} />
-          {Boolean(error) && <S.Error>Incorrect input</S.Error>}
-        </S.InputFieldWrapper>
+          <S.Input
+            disabled={disabled}
+            $error={Boolean(error)}
+            type={type}
+            {...field}
+          />
+        </S.InputWrapper>
       )}
     />
   );
