@@ -29,15 +29,15 @@ export const TextField: React.FC<Props> = ({
       name={name}
       rules={{ required, min, max }}
       render={({ fieldState: { error }, field }) => (
-        <S.InputWrapper>
-          <label>{label}</label>
+        <S.Wrapper>
+          <S.Label>{label}</S.Label>
           <S.Input
             disabled={disabled}
             $error={Boolean(error)}
             type={type}
             {...field}
           />
-        </S.InputWrapper>
+        </S.Wrapper>
       )}
     />
   );

@@ -1,11 +1,11 @@
 import React, { ReactNode } from 'react';
 import * as S from './styled';
 
-interface Props {
+type Props = {
   form: ReactNode;
   output: ReactNode;
   serverError: ReactNode;
-}
+};
 
 export const Layout: React.FC<Props> = ({ form, output, serverError }) => {
   return (

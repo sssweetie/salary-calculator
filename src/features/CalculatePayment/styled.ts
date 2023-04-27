@@ -13,6 +13,7 @@ export const Form = styled.form`
     'input1 input2 input3'
     'button button button';
   grid-column-gap: 12px;
+  grid-row-gap: 24px;
   grid-template-columns: repeat(3, 150px);
 `;
 
@@ -25,14 +26,18 @@ export const SubmitButton = styled.button.attrs({ type: 'submit' })<{
   border: 0;
   grid-area: button;
   border-radius: 8px;
-  margin-top: 24px;
   font-size: 16px;
   font-weight: 700;
-  &:hover {
-    cursor: ${(props) => (props.disabled ? 'auto' : 'pointer')};
+  opacity: 1;
+  cursor: pointer;
+  transition: all 0.5s;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
   }
-  &:active {
-    opacity: ${(props) => !props.disabled && '80%'};
+  
+  &:active:not(:disabled) {
+    opacity: 0.8;
   }
-  opacity: ${(props) => (props.disabled ? '50%' : '100%')};
 `;

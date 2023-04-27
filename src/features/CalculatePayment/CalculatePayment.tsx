@@ -36,9 +36,12 @@ export const CalculatePayment: React.FC = () => {
   const onSubmit = async ({ salary, hours, yearMonth }: SalaryData) => {
     try {
       setLoading(true);
+      setServerError(undefined);
+
       const workingDays = await daysOffService.getWorkingDays(
         parseYearMonth(yearMonth)
       );
+      
       setWorkingDays(workingDays);
       setHourSalary(salary / hours / workingDays);
     } catch (error) {
@@ -61,6 +64,7 @@ export const CalculatePayment: React.FC = () => {
             control={control}
             name="salary"
             required={true}
+            min={0}
           />
           <TextField
             label="Hours per day"
@@ -86,7 +90,7 @@ export const CalculatePayment: React.FC = () => {
         </S.Form>
       }
       output={<Output hourSalary={hourSalary} workingDays={workingDays} />}
-      serverError={<Error>{serverError}</Error>}
+      serverError={serverError && <Error>{serverError}</Error>}
     />
   );
 };

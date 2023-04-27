@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 8px;
+  gap: 12px;
+  padding: 16px;
+  margin-top: 24px;
+  background: #eeeeee;
 `;
 
-export const Output = styled.p`
-  margin-top: 12px;
-`;
-
-export const Line = styled.hr`
-  border: 1px solid #9a9a9a;
-  margin: 24px 0;
-`;
+export const Output = styled.p``;
